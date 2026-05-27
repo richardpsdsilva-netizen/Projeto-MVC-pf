@@ -1,14 +1,14 @@
 # controllers/usuario_controller.py — Gerenciamento de usuários
 # Rotas acessíveis apenas por administradores.
 
-
+from fastapi.responses import HTMLResponse
 from fastapi import APIRouter, Depends, Request, Form, status
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.models.usuario import Usuario
+from app.models.usuarios import Usuario
 from app.auth import get_admin, hash_senha
 
 router = APIRouter(prefix="/usuarios", tags=["Usuários"])
@@ -20,7 +20,7 @@ templates = Jinja2Templates(directory="app/templates")
 # LISTAGEM
 # ============================================================
 
-@router.get("/", response_class=HTMLResponse)
+@router.get("/", response_class = HTMLResponse)
 def listar_usuarios(
     request: Request,
     db: Session = Depends(get_db),
